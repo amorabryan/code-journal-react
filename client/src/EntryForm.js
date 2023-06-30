@@ -1,10 +1,10 @@
 import { useState } from 'react';
+import placeHolderImage from './images/placeholder-image-square.jpg';
 
-export default function EntryForm() {
-  const [photoRender, setPhotoRender] = useState('');
-  if (photoRender === '') {
-    setPhotoRender('../images/placeholder-image.square.jpg');
-  }
+export default function EntryForm(props) {
+  const [imageRender, setImageRender] = useState(placeHolderImage);
+  const [title, setTitle] = useState('');
+  const [notes, setNotes] = useState('');
 
   return (
     <div className="container" data-view="entry-form">
@@ -19,18 +19,18 @@ export default function EntryForm() {
             <img
               className="input-b-radius form-image"
               id="formImage"
-              src={photoRender}
+              src={imageRender === '' ? placeHolderImage : imageRender}
               alt="entry"
             />
           </div>
           <div className="column-half">
-            <EntryTitle />
-            <PhotoUrl onChange={setPhotoRender} />
+            <EntryTitle onChange={setTitle} />
+            <PhotoUrl onChange={setImageRender} />
           </div>
         </div>
         <div className="row margin-bottom-1">
           <div className="column-full">
-            <EntryNotes />
+            <EntryNotes onChange={setNotes} />
           </div>
         </div>
         <div className="row">
@@ -41,7 +41,7 @@ export default function EntryForm() {
               id="deleteEntry">
               Delete Entry
             </button>
-            <SaveButton />
+            <SaveButton image={imageRender} title={title} notes={notes} />
           </div>
         </div>
       </form>
@@ -49,7 +49,7 @@ export default function EntryForm() {
   );
 }
 
-function EntryTitle() {
+function EntryTitle(props) {
   return (
     <>
       <label className="margin-bottom-1 d-block" for="title">
@@ -61,6 +61,7 @@ function EntryTitle() {
         type="text"
         id="formTitle"
         name="formTitle"
+        onChange={(e) => props.onChange(e.target.value)}
       />
     </>
   );
@@ -78,13 +79,13 @@ function PhotoUrl(props) {
         type="text"
         id="formURL"
         name="formURL"
-        onChange={props.onChange((e) => e.target.value)}
+        onChange={(e) => props.onChange(e.target.value)}
       />
     </>
   );
 }
 
-function EntryNotes() {
+function EntryNotes(props) {
   return (
     <>
       <label className="margin-bottom-1 d-block" for="formNotes">
@@ -96,12 +97,21 @@ function EntryNotes() {
         name="formNotes"
         id="formNotes"
         cols="30"
-        rows="10"></textarea>
+        rows="10"
+        onChange={(e) => props.onChange(e.target.value)}></textarea>
     </>
   );
 }
 
-function SaveButton() {
+function SaveButton(props) {
+  let entry = {
+    title: props.title,
+    url: props.image,
+    notes: props.notes,
+  };
+
+  console.log(entry);
+
   return (
     <button className="input-b-radius text-padding purple-background white-text">
       SAVE
