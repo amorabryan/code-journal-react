@@ -6,6 +6,13 @@ export default function EntryForm(props) {
   const [title, setTitle] = useState('');
   const [notes, setNotes] = useState('');
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setTitle('');
+    setNotes('');
+    setImageRender(placeHolderImage);
+  }
+
   return (
     <div className="container" data-view="entry-form">
       <div className="row">
@@ -13,7 +20,7 @@ export default function EntryForm(props) {
           <h1 id="formH1">New Entry</h1>
         </div>
       </div>
-      <form id="entryForm">
+      <form id="entryForm" onSubmit={handleSubmit}>
         <div className="row margin-bottom-1">
           <div className="column-half">
             <img
@@ -41,7 +48,7 @@ export default function EntryForm(props) {
               id="deleteEntry">
               Delete Entry
             </button>
-            <SaveButton image={imageRender} title={title} notes={notes} />
+            <SaveButton image={imageRender} title={title} notes={notes} data={props.data}/>
           </div>
         </div>
       </form>
@@ -112,8 +119,9 @@ function SaveButton(props) {
 
   console.log(entry);
 
+  const dataLog = (entry) => props.data.entries.push(entry);
   return (
-    <button className="input-b-radius text-padding purple-background white-text">
+    <button className="input-b-radius text-padding purple-background white-text" onClick={dataLog}>
       SAVE
     </button>
   );
