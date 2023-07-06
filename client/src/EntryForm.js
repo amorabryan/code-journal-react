@@ -11,7 +11,7 @@ export default function EntryForm(props) {
     setTitle('');
     setNotes('');
     setImageRender(placeHolderImage);
-  }
+  };
 
   return (
     <div className="container" data-view="entry-form">
@@ -48,7 +48,12 @@ export default function EntryForm(props) {
               id="deleteEntry">
               Delete Entry
             </button>
-            <SaveButton image={imageRender} title={title} notes={notes} data={props.data}/>
+            <SaveButton
+              image={imageRender}
+              title={title}
+              notes={notes}
+              data={props.data}
+            />
           </div>
         </div>
       </form>
@@ -59,7 +64,7 @@ export default function EntryForm(props) {
 function EntryTitle(props) {
   return (
     <>
-      <label className="margin-bottom-1 d-block" for="title">
+      <label className="margin-bottom-1 d-block" htmlFor="formTitle">
         Title
       </label>
       <input
@@ -77,7 +82,7 @@ function EntryTitle(props) {
 function PhotoUrl(props) {
   return (
     <>
-      <label className="margin-bottom-1 d-block" for="photoUrk">
+      <label className="margin-bottom-1 d-block" htmlFor="formURL">
         Photo URL
       </label>
       <input
@@ -95,7 +100,7 @@ function PhotoUrl(props) {
 function EntryNotes(props) {
   return (
     <>
-      <label className="margin-bottom-1 d-block" for="formNotes">
+      <label className="margin-bottom-1 d-block" htmlFor="formNotes">
         Notes
       </label>
       <textarea
@@ -121,7 +126,9 @@ function SaveButton(props) {
 
   const dataLog = (entry) => props.data.entries.push(entry);
   return (
-    <button className="input-b-radius text-padding purple-background white-text" onClick={dataLog}>
+    <button
+      className="input-b-radius text-padding purple-background white-text"
+      onClick={dataLog}>
       SAVE
     </button>
   );
